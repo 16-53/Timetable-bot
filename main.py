@@ -36,6 +36,7 @@ def lesson(message):
 
 
             if hour < 7 or hour == 7 and minute <= 45:
+                text = time_table[i][0] + " - " + time_table[i][1]
                 for i in range(len(time_table[0][2])):
                     text += time_table[0][2][i] + "\n"
                 bot.send_message(message.chat.id, text)
@@ -45,7 +46,7 @@ def lesson(message):
                 hour < start_lesson_2[0]
                 or (hour == start_lesson_2[0] and minute <= start_lesson_2[1])
             ):
-                print("Joined")
+                text = time_table[i+1][0] + " - " + time_table[i+1][1]
                 for j in range(len(time_table[i+1][2])):
                     text += time_table[i+1][2][j] + "\n"
                 bot.send_message(message.chat.id, text)
