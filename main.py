@@ -38,7 +38,7 @@ def lesson(message):
             if hour < 7 or hour == 7 and minute <= 45:
                 text = time_table[i][0] + " - " + time_table[i][1]
                 for i in range(len(time_table[0][2])):
-                    text += time_table[0][2][i] + "\n"
+                    text += "\n" + time_table[0][2][i]
                 bot.send_message(message.chat.id, text)
                 break
             
@@ -48,7 +48,7 @@ def lesson(message):
             ):
                 text = time_table[i+1][0] + " - " + time_table[i+1][1]
                 for j in range(len(time_table[i+1][2])):
-                    text += time_table[i+1][2][j] + "\n"
+                    text += "\n" + time_table[i+1][2][j] 
                 bot.send_message(message.chat.id, text)
                 break
             
