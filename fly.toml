@@ -1,4 +1,4 @@
-# fly.toml file generated for timetable-bot on 2022-09-11T19:27:01+03:00
+# fly.toml file generated for timetable-bot on 2022-09-12T15:21:58+03:00
 
 app = "timetable-bot"
 kill_signal = "SIGINT"

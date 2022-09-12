@@ -1,6 +1,5 @@
 import calendar
-import datetime
-from datetime import date
+from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from telebot import TeleBot, types
@@ -19,10 +18,10 @@ def start(message):
 @bot.message_handler(commands=["next_lesson"])
 def lesson(message):
     date_now = date.today()
-    hour = datetime.datetime.today().hour
-    minute = datetime.datetime.today().minute
+    hour = (datetime.utcnow() + timedelta(hours=3)).hour
+    minute = (datetime.utcnow() + timedelta(hours=3)).minute
     weekday = calendar.day_name[date_now.weekday()]
-    
+        
     if weekday == "Sunday" or weekday == "Saturday":
         bot.send_message(message.chat.id, 'Have a nice weekend!')
         
