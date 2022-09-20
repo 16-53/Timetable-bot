@@ -15,6 +15,28 @@ def start(message):
     bot.send_message(message.chat.id, text, reply_markup=actions())
 
 
+@bot.message_handler(commands=["timetable_today"])
+def tt_today(message):
+    date_now = date.today()
+    weekday = calendar.day_name[date_now.weekday()]
+    
+    if weekday == "Sunday" or weekday == "Saturday":
+        bot.send_message(message.chat.id, "No lessons for today!")    
+
+    else:
+        time_table = timetable(weekday)
+        text = ""
+        
+        for i in range(len(time_table)):
+            text += "\n"+ (time_table[i][0] + " - " + time_table[i][1])
+            for j in range(len(time_table[i][2])):
+                text += "\n" + time_table[i][2][j]
+            text += "\n"
+                
+        bot.send_message(message.chat.id, text)
+            
+
+
 @bot.message_handler(commands=["next_lesson"])
 def lesson(message):
     date_now = date.today()
@@ -23,21 +45,20 @@ def lesson(message):
     weekday = calendar.day_name[date_now.weekday()]
         
     if weekday == "Sunday" or weekday == "Saturday":
-        bot.send_message(message.chat.id, 'Have a nice weekend!')
+        bot.send_message(message.chat.id, "Have a nice weekend!")
         
     else:       
         time_table = timetable(weekday)
         text = ""
 
         for i in range(len(time_table) - 1):
-            start_lesson = list(map(int, time_table[i][0].split(":")))
             start_lesson_2 = list(map(int, time_table[i + 1][0].split(":")))
 
 
             if hour < 7 or hour == 7 and minute <= 45:
                 text = time_table[i][0] + " - " + time_table[i][1]
-                for i in range(len(time_table[0][2])):
-                    text += "\n" + time_table[0][2][i]
+                for j in range(len(time_table[0][2])):
+                    text += "\n" + time_table[0][2][j]
                 bot.send_message(message.chat.id, text)
                 break
             
@@ -58,8 +79,10 @@ def lesson(message):
 
 def actions():
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
+    keyboard.row_width = 2
     button_next_lesson = types.KeyboardButton("/next_lesson")
-    keyboard.add(button_next_lesson)
+    button_tt_today = types.KeyboardButton("/timetable_today")
+    keyboard.row(button_next_lesson, button_tt_today)
     
     return keyboard
 
