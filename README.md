@@ -1,4 +1,4 @@
 # Timetable-bot
 This bot gives information about the next school lesson, the timetable for the current and next day.
 ____
-![image](https://user-images.githubusercontent.com/70277523/191549207-d8cf9834-7c46-4c3b-9af5-55eaa5abc0a7.png)
+![image](https://user-images.githubusercontent.com/70277523/192286503-b873c146-89ad-49fa-a38c-e8c723c52cb0.png)
