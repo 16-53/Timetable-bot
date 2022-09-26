@@ -2,6 +2,7 @@ import calendar
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
+import enums
 from telebot import TeleBot, types
 from timetable import timetable
 
@@ -34,12 +35,12 @@ def tt_today(message):
         text = ""
 
         for i in range(len(time_table)):
-            text += "\n" + (time_table[i][0] + " - " + time_table[i][1])
+            text += "\n" + "*" + (time_table[i][0] + " - " + time_table[i][1]) + "*"
             for j in range(len(time_table[i][2])):
                 text += "\n" + time_table[i][2][j]
             text += "\n"
 
-        bot.send_message(message.chat.id, text)
+        bot.send_message(message.chat.id, text, parse_mode="Markdown")
 
 
 @bot.message_handler(commands=["tt_tomorrow"])
@@ -55,12 +56,12 @@ def tt_tomorrow(message):
         text = ""
 
         for i in range(len(time_table)):
-            text += "\n" + (time_table[i][0] + " - " + time_table[i][1])
+            text += "\n" + "*" + (time_table[i][0] + " - " + time_table[i][1]) + "*"
             for j in range(len(time_table[i][2])):
                 text += "\n" + time_table[i][2][j]
             text += "\n"
 
-        bot.send_message(message.chat.id, text)
+        bot.send_message(message.chat.id, text, parse_mode="Markdown")
 
 
 @bot.message_handler(commands=["next_lesson"])
@@ -81,24 +82,24 @@ def lesson(message):
             start_lesson_2 = list(map(int, time_table[i + 1][0].split(":")))
 
             if hour < 7 or hour == 7 and minute <= 45:
-                text = time_table[i][0] + " - " + time_table[i][1]
+                text = "*" + time_table[i][0] + " - " + time_table[i][1] + "*"
                 for j in range(len(time_table[0][2])):
                     text += "\n" + time_table[0][2][j]
-                bot.send_message(message.chat.id, text)
+                bot.send_message(message.chat.id, text, parse_mode="Markdown")
                 break
 
             elif hour < start_lesson_2[0] or (
                 hour == start_lesson_2[0] and minute <= start_lesson_2[1]
             ):
-                text = time_table[i + 1][0] + " - " + time_table[i + 1][1]
+                text = "*" + time_table[i + 1][0] + " - " + time_table[i + 1][1] + "*"
                 for j in range(len(time_table[i + 1][2])):
                     text += "\n" + time_table[i + 1][2][j]
-                bot.send_message(message.chat.id, text)
+                bot.send_message(message.chat.id, text, parse_mode="Markdown")
                 break
 
         if text == "":
-            text = "Congratulations! No more lessons for today!"
-            bot.send_message(message.chat.id, text)
+            text = "*Congratulations! No more lessons for today!*"
+            bot.send_message(message.chat.id, text, parse_mode="Markdown")
 
 
 def actions():
